@@ -84,6 +84,10 @@ Needs a public URL for Twilio to reach it (ngrok/Cloudflare Tunnel for local dev
 deployment) — set `PUBLIC_BASE_URL` in `.env` accordingly and point your Twilio number's Voice
 webhook at `{PUBLIC_BASE_URL}/twilio/voice`.
 
+If you have an NVIDIA GPU and want faster speech-to-text, also install
+`nvidia-cublas-cu12` and `nvidia-cudnn-cu12` — deliberately left out of `requirements.txt` since
+they're several hundred MB and dead weight on any machine without a GPU (Railway included).
+
 ## Known limitations (honest, not hidden)
 
 - **Latency**: end-to-end turn time is realistically 8–14 seconds on this free/local stack —

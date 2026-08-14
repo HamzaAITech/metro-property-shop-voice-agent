@@ -10,11 +10,11 @@ twilio==9.10.9
 
 # Speech-to-text (Step 3)
 faster-whisper==1.2.1
-
-# Optional GPU acceleration for faster-whisper - falls back to CPU
-# automatically if these aren't present or no CUDA GPU is available (Step 8)
-nvidia-cublas-cu12==12.9.2.10
-nvidia-cudnn-cu12==9.24.0.43
+# GPU acceleration is optional and NOT listed here - app/stt/whisper_stt.py
+# falls back to CPU automatically if no compatible GPU is present (e.g. on
+# Railway, which has none). If deploying somewhere with an NVIDIA GPU, add
+# nvidia-cublas-cu12 and nvidia-cudnn-cu12 for a real speed improvement -
+# they're several hundred MB and pure dead weight anywhere without a GPU.
 
 # Text-to-speech (Step 4)
 edge-tts==7.2.8
