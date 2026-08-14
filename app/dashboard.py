@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
 SHOP_PHONE_DISPLAY = "+1 (659) 234-7944"
+SHOP_PHONE_TEL = "+16592347944"  # tel: links need clean digits, no spaces/parens
 
 _LANG_LABELS = {"en": "English", "hi": "Hindi"}
 
@@ -71,7 +72,7 @@ def render_dashboard(all_leads: list) -> str:
             <div class="empty-icon">📞</div>
             <div class="empty-title">No leads yet</div>
             <div class="empty-subtitle">
-              Call <a href="tel:{SHOP_PHONE_DISPLAY}">{SHOP_PHONE_DISPLAY}</a> to try the agent live —
+              Call <a href="tel:{SHOP_PHONE_TEL}">{SHOP_PHONE_DISPLAY}</a> to try the agent live —
               captured leads will show up here automatically.
             </div>
           </div>
@@ -201,7 +202,7 @@ def render_dashboard(all_leads: list) -> str:
     <header>
       <div class="eyebrow">Metro Property Shop</div>
       <h1>Leads Dashboard</h1>
-      <div class="subtitle">Captured automatically from calls to <a href="tel:{SHOP_PHONE_DISPLAY}">{SHOP_PHONE_DISPLAY}</a></div>
+      <div class="subtitle">Captured automatically from calls to <a href="tel:{SHOP_PHONE_TEL}">{SHOP_PHONE_DISPLAY}</a></div>
     </header>
 
     <div class="stats">
