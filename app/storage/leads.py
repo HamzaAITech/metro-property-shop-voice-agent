@@ -51,6 +51,16 @@ def save_lead(call_id: str, lead: dict) -> None:
     conn.close()
 
 
+def delete_lead(call_id: str) -> bool:
+    """Returns True if a row was actually deleted."""
+    conn = _get_conn()
+    with conn:
+        cur = conn.execute("DELETE FROM leads WHERE call_id = ?", (call_id,))
+        deleted = cur.rowcount > 0
+    conn.close()
+    return deleted
+
+
 def list_leads() -> list[dict]:
     conn = _get_conn()
     cur = conn.execute(

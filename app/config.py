@@ -18,5 +18,9 @@ class Settings(BaseSettings):
 
     tts_provider: str = "edge-tts"
 
+    # Required to hit DELETE /leads/{id} - the dashboard is public, so
+    # deleting leads shouldn't be wide open to anyone who finds the URL.
+    admin_token: str = ""
+
 
 settings = Settings()

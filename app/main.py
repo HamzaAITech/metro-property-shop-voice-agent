@@ -1,7 +1,7 @@
 import asyncio
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -41,3 +41,12 @@ def dashboard():
 @app.get("/leads")
 def get_leads():
     return leads.list_leads()
+
+
+@app.delete("/leads/{call_id}")
+def remove_lead(call_id: str, token: str = ""):
+    if not settings.admin_token or token != settings.admin_token:
+        raise HTTPException(status_code=403, detail="Invalid or missing token")
+    if not leads.delete_lead(call_id):
+        raise HTTPException(status_code=404, detail="Lead not found")
+    return {"status": "deleted", "call_id": call_id}
