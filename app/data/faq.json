@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What are your office hours?",
+    "answer": "The office is open Monday to Saturday, 10 AM to 7 PM. Closed on Sundays."
+  },
+  {
+    "question": "Where is the office located?",
+    "answer": "[Fill in real shop address before demo]"
+  },
+  {
+    "question": "What documents are needed to rent a property?",
+    "answer": "ID proof (Aadhaar/PAN), address proof, and salary slips or income proof for the last 3 months."
+  },
+  {
+    "question": "What documents are needed to buy a property?",
+    "answer": "ID proof, PAN card, address proof, and bank pre-approval letter if financing through a loan."
+  },
+  {
+    "question": "Do you charge brokerage?",
+    "answer": "Yes, standard brokerage is one month's rent for rentals, or 1% of sale value for purchases. [Confirm real terms before demo]"
+  },
+  {
+    "question": "Can I schedule a site visit?",
+    "answer": "Yes, tell me your preferred date and time and I will note it down along with your contact number."
+  }
+]

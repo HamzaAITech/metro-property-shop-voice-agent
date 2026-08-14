@@ -1,0 +1,23 @@
+# Backend
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic-settings==2.7.1
+python-dotenv==1.0.1
+python-multipart==0.0.20
+
+# Telephony (Step 9)
+twilio==9.10.9
+
+# Speech-to-text (Step 3)
+faster-whisper==1.2.1
+
+# Optional GPU acceleration for faster-whisper - falls back to CPU
+# automatically if these aren't present or no CUDA GPU is available (Step 8)
+nvidia-cublas-cu12==12.9.2.10
+nvidia-cudnn-cu12==9.24.0.43
+
+# Text-to-speech (Step 4)
+edge-tts==7.2.8
+
+# LLM / conversation (Step 5)
+anthropic==0.121.0

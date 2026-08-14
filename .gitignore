@@ -1,0 +1,23 @@
+venv/
+__pycache__/
+*.pyc
+.env
+*.db
+.pytest_cache/
+audio_cache/
+tests/fixtures/*.mp3
+tests/fixtures/*.flac
+
+# Personal/business docs, not project code - kept locally only
+docs/Interview_Talking_Points.rtf
+docs/Property_Shop_Proposal.pdf
+
+# ngrok/cloudflared binaries and diagnostic scratch scripts
+tools/
+demo_recordings/*_raw.mp3
+
+# Local tool config, not project code
+.claude/
+
+# Development debug dumps (not real automated tests)
+tests/fixtures/*.txt
