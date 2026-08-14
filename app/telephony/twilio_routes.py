@@ -136,10 +136,13 @@ def _record_next_turn(vr: VoiceResponse) -> None:
         # Silence-detection timeout: how long Twilio waits after you stop
         # talking before it's confident you're actually done (this, not our
         # server, is most of the "delay before the filler plays" you heard -
-        # we don't even get the recording until this timeout fires). Trimmed
-        # from 3s to 2s for a snappier feel; going lower risks cutting you
-        # off if you pause mid-sentence to think.
-        timeout=2,
+        # we don't even get the recording until this timeout fires). Was
+        # trimmed to 2s for a snappier feel, but that caused a real call to
+        # lose an entire turn (caller paused briefly mid-sentence, Twilio cut
+        # the recording before they finished, STT got empty audio, call
+        # ended with "I didn't catch that"). A dropped turn is far worse
+        # than 1 extra second of latency - reverted to 3s.
+        timeout=3,
         play_beep=False,
         trim="trim-silence",
     )
@@ -241,7 +244,9 @@ def voice_incoming(
     raw_number = To if is_outbound else From
     known_phone_number = re.sub(r"\D", "", raw_number)[-10:] if raw_number else None
 
-    call_sessions[CallSid] = Conversation(known_phone_number=known_phone_number)
+    call_sessions[CallSid] = Conversation(
+        known_phone_number=known_phone_number, is_outbound=is_outbound
+    )
 
     # Records the WHOLE call (both what's played to the caller and what they
     # say) as one continuous file - useful as a durable portfolio artifact

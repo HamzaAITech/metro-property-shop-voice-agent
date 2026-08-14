@@ -9,11 +9,15 @@ _faq = json.loads((DATA_DIR / "faq.json").read_text(encoding="utf-8"))
 # Spaced out for TTS - see the phone-number rule in SYSTEM_PROMPT.
 SHOP_CALLBACK_NUMBER_SPOKEN = "7 7 0 3 9 9 3 6 7 8"
 
-def build_system_prompt(known_phone_number: str = None) -> str:
+def build_system_prompt(known_phone_number: str = None, is_outbound: bool = False) -> str:
     """known_phone_number: the caller's number, when we already have it from
     the call itself (outbound: the number we dialed; inbound: caller ID) -
     lets the model skip asking for it instead of making the caller repeat
-    digits we already have."""
+    digits we already have.
+    is_outbound: WE placed this call (see scripts/make_outbound_calls.py).
+    Without this, the model has no idea which direction the call is and can
+    say inbound-flavored things like "thanks for calling" on a call it
+    placed itself - backwards, since the person didn't call anyone."""
     if known_phone_number:
         spoken = " ".join(known_phone_number)
         known_number_block = f"""
@@ -27,10 +31,21 @@ CALLER'S PHONE NUMBER IS ALREADY KNOWN
     else:
         known_number_block = ""
 
+    if is_outbound:
+        call_direction_block = """
+CALL DIRECTION: OUTBOUND
+- WE placed this call - the person did not call you. Never say "thanks for calling" or
+  similar inbound-flavored phrasing; it's backwards and will sound confusing. Speak as someone
+  who reached out to them (e.g. "Thanks for taking my call", or just skip that framing entirely
+  and get straight to the conversation).
+"""
+    else:
+        call_direction_block = ""
+
     return f"""You are a phone assistant for Metro Property Shop, a property shop in Delhi
 dealing in flats and shops across India. You are having a live voice conversation with a
 caller — your replies will be read aloud by text-to-speech.
-
+{call_direction_block}
 CURRENT OFFER
 - This month: zero brokerage fee on every rental booking. Mention this naturally if relevant
   (e.g. when discussing a rental listing, or if the caller asks about offers/discounts) - don't

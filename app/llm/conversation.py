@@ -15,7 +15,7 @@ MAX_TOOL_ROUNDS = 5
 class Conversation:
     """Holds message history for a single call and drives one LLM turn at a time."""
 
-    def __init__(self, known_phone_number: str = None):
+    def __init__(self, known_phone_number: str = None, is_outbound: bool = False):
         self.client = Anthropic(api_key=settings.anthropic_api_key)
         self.history: list[dict] = []
         self.captured_lead: dict | None = None
@@ -27,7 +27,7 @@ class Conversation:
         self.last_lang = "en"
         # Outbound: the number we dialed. Inbound: caller ID. Lets the system
         # prompt tell the model not to ask for a number it already has.
-        self.system_prompt = build_system_prompt(known_phone_number)
+        self.system_prompt = build_system_prompt(known_phone_number, is_outbound)
 
     def respond(self, user_text: str) -> str:
         self.history.append({"role": "user", "content": user_text})
