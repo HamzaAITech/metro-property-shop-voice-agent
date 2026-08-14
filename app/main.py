@@ -2,9 +2,11 @@ import asyncio
 from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
+from app.dashboard import render_dashboard
 from app.stt.whisper_stt import get_model
 from app.storage import leads
 from app.telephony.twilio_routes import AUDIO_DIR
@@ -29,6 +31,11 @@ async def warm_up_models():
 @app.get("/health")
 def health():
     return {"status": "ok", "env": settings.app_env}
+
+
+@app.get("/", response_class=HTMLResponse)
+def dashboard():
+    return render_dashboard(leads.list_leads())
 
 
 @app.get("/leads")
