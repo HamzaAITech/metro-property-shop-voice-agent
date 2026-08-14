@@ -1,7 +1,9 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent.parent.parent / "leads.db"
+from app.config import settings
+
+DB_PATH = Path(settings.leads_db_path)
 
 
 def _get_conn() -> sqlite3.Connection:

@@ -22,5 +22,11 @@ class Settings(BaseSettings):
     # deleting leads shouldn't be wide open to anyone who finds the URL.
     admin_token: str = ""
 
+    # A code redeploy on Railway gets a fresh container filesystem - without
+    # this pointed at a mounted persistent volume, every deploy silently
+    # wipes every captured lead. Defaults to a local relative path (fine for
+    # local dev, where the process/filesystem persists across restarts).
+    leads_db_path: str = "leads.db"
+
 
 settings = Settings()
